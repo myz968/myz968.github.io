@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>zym968 · 作品集</title>
+<meta name="description" content="软件工程在读。做桌面端、网页端和一些没用但好玩的桌面小玩意。" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏓</text></svg>" />
+<style>
+  :root{
+    --bg:#08090c;
+    --bg-soft:#0e1015;
+    --line:rgba(255,255,255,.08);
+    --line-hi:rgba(255,255,255,.18);
+    --fg:#e9ecf2;
+    --fg-dim:#8b93a3;
+    --accent:#4f8cff;
+    --accent-2:#7ef0c4;
+    --radius:18px;
+    --maxw:1120px;
+    --font-sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    --font-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:var(--font-sans);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  /* 背景光斑 */
+  body::before{
+    content:"";
+    position:fixed;inset:-20% -10% auto -10%;height:70vh;
+    background:
+      radial-gradient(45% 55% at 22% 30%, rgba(79,140,255,.16), transparent 70%),
+      radial-gradient(40% 50% at 78% 12%, rgba(126,240,196,.10), transparent 70%);
+    filter:blur(20px);
+    pointer-events:none;z-index:0;
+  }
+  .wrap{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+  /* ===== 顶部 ===== */
+  header{padding:88px 0 56px}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--fg-dim);border:1px solid var(--line);border-radius:999px;padding:6px 14px;
+    background:rgba(255,255,255,.03);
+  }
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--accent-2);box-shadow:0 0 10px var(--accent-2)}
+  h1{
+    margin:26px 0 14px;
+    font-size:clamp(34px,6.2vw,64px);
+    line-height:1.15;letter-spacing:-.02em;font-weight:800;
+  }
+  h1 em{
+    font-style:normal;
+    background:linear-gradient(100deg,var(--accent),var(--accent-2) 70%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .lede{max-width:640px;color:var(--fg-dim);font-size:clamp(15px,1.7vw,17px)}
+  .lede strong{color:var(--fg);font-weight:600}
+
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px}
+  .stat{
+    border:1px solid var(--line);border-radius:14px;padding:12px 16px;background:var(--bg-soft);
+    min-width:120px;
+  }
+  .stat b{display:block;font-family:var(--font-mono);font-size:20px;letter-spacing:-.01em}
+  .stat span{font-size:12px;color:var(--fg-dim);letter-spacing:.04em}
+
+  /* ===== 区块标题 ===== */
+  section{padding:36px 0}
+  .sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+  h2{font-size:15px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--fg-dim)}
+  .sec-note{font-family:var(--font-mono);font-size:12px;color:var(--fg-dim);opacity:.8}
+
+  /* ===== 项目卡 ===== */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+  .card{
+    position:relative;display:flex;flex-direction:column;gap:14px;
+    border:1px solid var(--line);border-radius:var(--radius);
+    background:linear-gradient(160deg,var(--bg-soft),#0a0b10);
+    padding:22px;text-decoration:none;color:inherit;
+    transition:border-color .25s,transform .25s,box-shadow .25s;
+    overflow:hidden;
+  }
+  .card:hover{
+    border-color:var(--line-hi);transform:translateY(-3px);
+    box-shadow:0 18px 40px -24px rgba(79,140,255,.55);
+  }
+  .card::after{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(60% 40% at 80% 0%,rgba(79,140,255,.10),transparent 70%);
+    opacity:0;transition:opacity .3s;pointer-events:none;
+  }
+  .card:hover::after{opacity:1}
+  .card-top{display:flex;align-items:center;gap:12px}
+  .glyph{
+    width:38px;height:38px;flex:none;border-radius:12px;
+    display:grid;place-items:center;font-size:18px;
+    background:rgba(255,255,255,.05);border:1px solid var(--line);
+  }
+  .card h3{font-size:17px;font-weight:650;letter-spacing:-.01em}
+  .card .en{display:block;font-family:var(--font-mono);font-size:11px;color:var(--fg-dim);letter-spacing:.06em;margin-top:2px}
+  .card p{font-size:13.5px;color:var(--fg-dim);flex:1}
+  .tags{display:flex;flex-wrap:wrap;gap:6px}
+  .tag{
+    font-family:var(--font-mono);font-size:10.5px;letter-spacing:.04em;
+    padding:3px 8px;border-radius:6px;color:var(--fg-dim);
+    border:1px solid var(--line);background:rgba(255,255,255,.02);
+  }
+  .links{display:flex;gap:14px;padding-top:4px;border-top:1px solid var(--line);padding-top:14px;font-size:12.5px}
+  .links a{color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+  .links a.ghost{color:var(--fg-dim)}
+  .links a:hover{text-decoration:underline}
+  .links span{color:var(--fg-dim);opacity:.6;font-size:11px;align-self:center}
+
+  /* ===== 时间线小字 ===== */
+  .foot{
+    margin-top:40px;padding:30px 0 70px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;
+    font-size:12.5px;color:var(--fg-dim);
+  }
+  .foot a{color:var(--fg-dim);text-decoration:none;border-bottom:1px solid var(--line-hi)}
+  .foot a:hover{color:var(--fg)}
+  .mono{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.04em}
+
+  /* 入场动画 */
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (max-width:560px){
+    header{padding:64px 0 36px}
+    .stat{flex:1 1 40%}
+    section{padding:26px 0}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="reveal">
+    <span class="eyebrow"><span class="dot"></span>自我介绍 · 2026</span>
+    <h1>写代码，也做点<em>没用但好玩</em>的东西。</h1>
+    <p class="lede">
+      软件工程在读，主要折腾 <strong>Java / SpringBoot</strong>、<strong>Electron</strong>、<strong>前端</strong>，
+      偶尔跑到 <strong>C# / PowerShell</strong> 那边做个透明窗口。
+      下面四个是我自己从零写出来的东西，都能点开玩。
+    </p>
+    <div class="stats">
+      <div class="stat"><b>4</b><span>公开发布的项目</b></span></div>
+      <div class="stat"><b>5547</b><span>手录词库条目</span></div>
+      <div class="stat"><b>279</b><span>关卡</span></div>
+      <div class="stat"><b>0</b><span>付费/广告</span></div>
+    </div>
+  </header>
+
+  <section>
+    <div class="sec-head">
+      <h2>Projects</h2>
+      <span class="sec-note">点卡片开仓库 · 点“在线玩”直接跑</span>
+    </div>
+
+    <div class="grid">
+      <!-- 四六级 -->
+      <div class="card reveal">
+        <div class="card-top">
+          <div class="glyph">📚</div>
+          <div><h3>四六级单词闯关</h3><span class="en">cet46-word-platform</span></div>
+        </div>
+        <p>5547 个自己手敲的词、279 关闯关制背单词。桌面版是 Electron 内嵌 SpringBoot + SQLite，手机版是纯前端 H5，能加成主屏离线用。</p>
+        <div class="tags"><span class="tag">SpringBoot</span><span class="tag">Electron</span><span class="tag">Vue3</span><span class="tag">SQLite</span><span class="tag">PWA</span></div>
+        <div class="links">
+          <a href="https://cet.zym968.com/" target="_blank" rel="noopener">在线玩 ↗</a>
+          <a class="ghost" href="https://github.com/myz968/cet46-word-platform" target="_blank" rel="noopener">源码</a>
+          <a class="ghost" href="https://github.com/myz968/cet46-word-platform/releases/tag/v1.0.0" target="_blank" rel="noopener">下载 exe</a>
+        </div>
+      </div>
+
+      <!-- 塔防 -->
+      <div class="card reveal">
+        <div class="card-top">
+          <div class="glyph">🎯</div>
+          <div><h3>塔防小游戏</h3><span class="en">protectqkwl</span></div>
+        </div>
+        <p>Vite + TypeScript 手写的塔防，75 个模块打成一个 131 KB 的包。守塔、挡怪、算伤害，全在浏览器里跑，没有后端。</p>
+        <div class="tags"><span class="tag">Vite</span><span class="tag">TypeScript</span><span class="tag">Canvas</span></div>
+        <div class="links">
+          <a href="https://myz968.github.io/protectqkwl/" target="_blank" rel="noopener">在线玩 ↗</a>
+          <a class="ghost" href="https://github.com/myz968/protectqkwl" target="_blank" rel="noopener">源码</a>
+        </div>
+      </div>
+
+      <!-- 桌宠插件 -->
+      <div class="card reveal">
+        <div class="card-top">
+          <div class="glyph">🏓</div>
+          <div><h3>DSH 桌宠插件</h3><span class="en">ping-pong</span></div>
+        </div>
+        <p>挂在编辑器边上的小人，不只会动：agent 待命/干活/等确认/出错四种状态实时切换，弹面板看状态和错误，有消息时那颗球会变成对应图标飞过去。</p>
+        <div class="tags"><span class="tag">DSH</span><span class="tag">WebP 帧动画</span><span class="tag">状态驱动</span></div>
+        <div class="links">
+          <a class="ghost" href="https://github.com/myz968/ping-pong" target="_blank" rel="noopener">源码 + 说明 ↗</a>
+          <span>插件，需 DSH 环境</span>
+        </div>
+      </div>
+
+      <!-- 桌面桌宠 -->
+      <div class="card reveal">
+        <div class="card-top">
+          <div class="glyph">🧸</div>
+          <div><h3>桌面桌宠</h3><span class="en">tablebluezhanshen</span></div>
+        </div>
+        <p>“蓝拍战神大战晴空萬李”。WPF 透明窗口贴在桌面上，两个小人在球台边对打，右键召唤、收宠一条命令搞定。</p>
+        <div class="tags"><span class="tag">C# / WPF</span><span class="tag">PowerShell</span><span class="tag">透明 Overlay</span></div>
+        <div class="links">
+          <a class="ghost" href="https://github.com/myz968/tablebluezhanshen" target="_blank" rel="noopener">源码 + 说明 ↗</a>
+          <span>Windows 桌面程序</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <div>
+      <span class="mono">zym968.com</span> · 全部自己写的，不商用、不放广告
+    </div>
+    <div>
+      <a href="https://github.com/myz968" target="_blank" rel="noopener">github.com/myz968</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // 滚动入场：只做一次观察，避免刷新闪
+  const items = [...document.querySelectorAll('.reveal')];
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    items.forEach((el, i) => { el.style.transitionDelay = (i * 60) + 'ms'; io.observe(el); });
+  } else {
+    items.forEach((el) => el.classList.add('in'));
+  }
+</script>
+</body>
+</html>
